@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="inner_container" style="padding: 20px;">
+        <h1>Assignment# 3</h1>
+        <h4>Application to handle API predictions</h4><!-- Buttons to handle client side requests -->
+        <a href="#" id="postImage">Post Image</a>
+    </div>
+    <div class="inner_container" style="padding: 20px; margin: 20px;">
+        <div class="card">
+             <!-- Header (requestType) -->
+            <h1 id="requestType"></h1>
+            <!-- Table Starts
+                 - pass  and the x, y, width, height, class, confidence and the response body
+            -->
+            <Table style="border: solid;">
+                <tr>
+                    <td>Status</td>
+                    <td id="status"></td>
+                </tr>
+                <tr>
+                    <td>Response Body</td>
+                    <td id="body"></td>
+                </tr>
+            </Table>
+            <!-- DIV's to handle both the response body and status-->
+            <div id="divResponseBody"></div>
+            <div id="divResponseStatus"></div>
+        </div>
+    </div>
+   <!-- script starts -->
+   <script src="https://cdn.roboflow.com/0.2.20/roboflow.js"></script>
+   <script>
+        // get body, and postImage detail by id
+        var divResponseBody = document.getElementById("body)");
+        var divResponseStatus = document.getElementById("status");
+        var divResponsePredictionId = document.getElementById("postImage");
+   
+        // handle button on clicks starts
+        window.onload = () => {
+            document.getElementById("postImage").onclick = postImage
+        }
+        
+        function postImage() {
+
+        async function getModel() {
+        var model = await roboflow
+            .auth({
+                publishable_key: "rf_CLCPOz364QZrkPGuARIi5T6NTXp2",
+            })
+            .load({
+                model: "chess-63bga",
+                version: 2,
+            });
+        
+            return model;
+        }
+        
+    
+        var initialized_model = getModel();
+    
+        initialized_model.then(function (model) {
+            model.configure({
+                threshold: 0.1,
+                overlap: 0.5,
+                max_objects: 20
+            });
+            model.getConfiguration()
+            model.getMetadata()
+            var img = document.createElement("img")
+            img.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Chess_board_opening_staunton.jpg/800px-Chess_board_opening_staunton.jpg"
+            img.style.width = "400px";
+            img.style.height = "400px";
+            var src = document.getElementById("divResponseBody")
+            src.appendChild(img)
+            /// use model.detect() to make a prediction (see "Getting Predictions" below)
+            model.detect(img).then(function(predictions) {
+                console.log("Predictions:", predictions);
+            });
+            model.teardown()
+        });
+    }
+   </script>
+</body>
+</html>
