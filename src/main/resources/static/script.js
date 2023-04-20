@@ -1,12 +1,12 @@
 // if user is on mobile resolution
-if (window.matchMedia("(max-width: 500px)").matches) {
+if (window.matchMedia("(max-width: 940px)").matches) {
     var width = window.innerWidth;
     var height = window.innerHeight;
     var picture_canvas = document.getElementById("picture_canvas");
     picture_canvas.width = width;
     picture_canvas.height = height;
 } else {
-    var width = 640;
+    var width = 940;
     var height = 640;
 }
 
@@ -29,7 +29,7 @@ var color_choices = [
 
 var available_models = {
     "chess-63bga": {
-        "name": "CHESS 63BGA",
+        "name": "Chess Board Sample",
         "version": 2,
         "confidence": 35,
         "imageGrid": [
@@ -44,7 +44,39 @@ var available_models = {
             "d9a.jpg",
             "e40.jpg",
             "ec5.jpg",
-            "f9a.jpg"
+            "f9a.jpg",
+            "a13.jpg",
+            "b14.jpg",
+            "c15.jpg",
+            "d16.jpg",
+            "e17.jpg",
+            "f18.jpg"
+        ],
+        "model": null
+    },
+    "hard-hat-sample-rxxzq": {
+        "name": "Hard Hat Sample",
+        "version": 2,
+        "confidence": 35,
+        "imageGrid": [
+            "000080_jpg.rf.UDJa4frTULr5kFQkLYoR.jpg",
+            "000029_jpg.rf.ynhtJgkwuGGyQoHyS735.jpg",
+            "000059_jpg.rf.vARPP8qgYaj8kE8BEpcx.jpg",
+            "000028_jpg.rf.5mB4KwNdl40IaJj7jIZF.jpg",
+            "000035_jpg.rf.Mldw7ZiTXavHvJPAAr15.jpg",
+            "000084_jpg.rf.6bXneea3O5xbU2vUZ8Rt.jpg",
+            "000038_jpg.rf.Zm5JuLNxOCM08kbk5ysZ.jpg",
+            "000039_jpg.rf.TL91Q3MpJjh7aLsiSgtk.jpg",
+            "000067_jpg.rf.COOQa83KWWvg1ZfV96cg.jpg",
+            "000079_jpg.rf.HhzdbdkdHdtCzSmy31aR.jpg",
+            "000083_jpg.rf.gXUpFQag3YxxGdxruFB2.jpg",
+            "000087_jpg.rf.M6D3pcV0QQ13srlYBwSg.jpg",
+            "000073_jpg.rf.esZ2aOkiSDwd1zGhLSiT.jpg",
+            "000098_jpg.rf.oIxMDOqiZ6Aq0tJ1CGx5.jpg",
+            "000001_jpg.rf.8FkaVqzb2n3wO25SCLyN.jpg",
+            "000094_jpg.rf.Cl6YSkQVDOwmfAFcPTXs.jpg",
+            "000008_jpg.rf.WWkQNjS8JNPEymzN80T7.jpg",
+            "000026_jpg.rf.nkEAM6JqsILw0can2LEL.jpg"
         ],
         "model": null
     }
@@ -117,7 +149,7 @@ function switchModel() {
         document.getElementById("picture_canvas").style.display = "none";
         document.getElementById("picture").style.display = "none";
         // hide command tray
-        // document.getElementById("prechosen_images_parent").style.display = "none";
+        document.getElementById("prechosen_images_parent").style.display = "none";
     } else {
         document.getElementById("picture_canvas").style.display = "none";
         document.getElementById("picture").style.display = "block";
@@ -213,7 +245,7 @@ function drawBoundingBoxes(predictions, canvas, context, scalingRatio, sx, sy, f
         height *= scalingRatio;
     }
 
-    // if box is partially outside 640x640, clip it
+    // if box is partially outside 940x640, clip it
     if (x < 0) {
         width += x;
         x = 0;
@@ -272,7 +304,7 @@ function drawBoundingBoxes(predictions, canvas, context, scalingRatio, sx, sy, f
 function getCoordinates(img) {
     var dx = 0;
     var dy = 0;
-    var dWidth = 640;
+    var dWidth = 940;
     var dHeight = 640;
 
     var sy;
