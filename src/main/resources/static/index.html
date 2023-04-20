@@ -11,68 +11,87 @@
 </head>
 
 <body>
-    <div class="inner_container" style="padding: 20px;">
-
-        <header>
+    <div class="inner_container" id="inner_container" style="padding: 20px;">
+        <header style="padding: 20px;">
             <h1>Assignment# 3</h1>
             <p>
-                Client API to upload image, and or select image for inference from Roboflow DataSet.
+                <i>Client API to inference image(s) from Roboflow DataSet.</i>
+                <br><br>
+                <b>Roboflow DataSet(s) used:</b>
                 <br>
-                Roboflow DataSets used:
-                <ul>
-                    <li>
-                        Chess Piece Detection API
-                    </li>
-                    <li>
-                        Hard Hat Detection API
-                    </li>
-                </ul>
+                Chess Piece Detection API
                 <br>
-                Prediction (Confidence): Starting value = 17, use slider to chnage confindence level
+                Hard Hat Detection API
                 <br>
-                Note: User must reselect image to view prediciton change(s).
+                <b>Prediction (Confidence):</b> 
+                <br>
+                Starting value = 17, use slider to change confindence level
+                <br>            
+                <i><b>Note:</b> User must reselect image to view prediciton change(s)</i>
+                <br>            
+                <b>Slider:</b>
+                <br>
+                Moving the slider to the left will increase prediciton(s) returned
             </p>
         </header>
+    </div>
 
-        <img src="https://uploads-ssl.webflow.com/5f6bc60e665f54545a1e52a5/63d3f236a6f0dae14cdf0063_drag-image-here.png" id="picture" style="display: none" />
+    
+    <canvas width="940" height="640" id="picture_canvas"></canvas>
 
-        <canvas width="940" height="640" id="picture_canvas"></canvas>
-
-        <div id="prechosen_images_parent">
-            <div id="prechosen_images">
-                <img src="0af.jpg" id="picture_1" onclick="imageInference(this)" />
-                <img src="1be.jpg" id="picture_2" onclick="imageInference(this)" />
-                <img src="5c1.jpg" id="picture_3" onclick="imageInference(this)" />
-                <img src="55b.jpg" id="picture_4" onclick="imageInference(this)" />
-                <img src="a97.jpg" id="picture_5" onclick="imageInference(this)" />
-                <img src="bc5.jpg" id="picture_6" onclick="imageInference(this)" />
-                <img src="c78.jpg" id="picture_7" onclick="imageInference(this)" />
-                <img src="ce5.jpg" id="picture_8" onclick="imageInference(this)" />
-                <img src="d9a.jpg" id="picture_9" onclick="imageInference(this)" />
-                <img src="e40.jpg" id="picture_10" onclick="imageInference(this)" />
-                <img src="ec5.jpg" id="picture_11" onclick="imageInference(this)" />
-                <img src="f9a.jpg" id="picture_12" onclick="imageInference(this)" />
-                <img src="a13.jpg" id="picture_13" onclick="imageInference(this)" />
-                <img src="b14.jpg" id="picture_14" onclick="imageInference(this)" />
-                <img src="c15.jpg" id="picture_15" onclick="imageInference(this)" />
-                <img src="d16.jpg" id="picture_16" onclick="imageInference(this)" />
-                <img src="e17.jpg" id="picture_17" onclick="imageInference(this)" />
-                <img src="f18.jpg" id="picture_18" onclick="imageInference(this)" />
-            </div>
-
-            <div class="slidecontainer" id="prechosen_images">
-                <input type="range" min="1" max="100" value="17" class="slider" id="confidence">
-            </div>
+    <div id="prechosen_images_parent">
+        <div id="prechosen_images">
+            <img src="0af.jpg" id="picture_1" onclick="imageInference(this)" />
+            <img src="1be.jpg" id="picture_2" onclick="imageInference(this)" />
+            <img src="5c1.jpg" id="picture_3" onclick="imageInference(this)" />
+            <img src="55b.jpg" id="picture_4" onclick="imageInference(this)" />
+            <img src="a97.jpg" id="picture_5" onclick="imageInference(this)" />
+            <img src="bc5.jpg" id="picture_6" onclick="imageInference(this)" />
+            <img src="c78.jpg" id="picture_7" onclick="imageInference(this)" />
+            <img src="ce5.jpg" id="picture_8" onclick="imageInference(this)" />
+            <img src="d9a.jpg" id="picture_9" onclick="imageInference(this)" />
+            <img src="e40.jpg" id="picture_10" onclick="imageInference(this)" />
+            <img src="ec5.jpg" id="picture_11" onclick="imageInference(this)" />
+            <img src="f9a.jpg" id="picture_12" onclick="imageInference(this)" />
+            <img src="a13.jpg" id="picture_13" onclick="imageInference(this)" />
+            <img src="b14.jpg" id="picture_14" onclick="imageInference(this)" />
+            <img src="c15.jpg" id="picture_15" onclick="imageInference(this)" />
+            <img src="d16.jpg" id="picture_16" onclick="imageInference(this)" />
+            <img src="e17.jpg" id="picture_17" onclick="imageInference(this)" />
+            <img src="f18.jpg" id="picture_18" onclick="imageInference(this)" />
         </div>
 
-        <a href="#" id="image-predict" class="hero_button_secondary">Predict Using Image</a>
-        <select id="model-select" class="hero_button_secondary"></select>
+        <div class="slidecontainer" id="prechosen_images">
+            <input type="range" min="1" max="100" value="17" class="slider" id="confidence">
+        </div>
+        <br><br>
+        <img src="https://uploads-ssl.webflow.com/5f6bc60e665f54545a1e52a5/63d3f236a6f0dae14cdf0063_drag-image-here.png" id="picture" style="display: none" />
     </div>
-        
-        <!-- script starts -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <script src="https://cdn.roboflow.com/0.2.20/roboflow.js"></script>
-        <script src="script.js"></script>
+    <br><br>
+    <!-- Copyrights -->
+    <div id="footer" class="bg-light py-4">
+        <div class="container text-center">
+          <a href="#" id="image-predict" class="hero_button_secondary" onclick="myFunction()">Predict Using Image</a>
+            <select id="model-select" class="hero_button_secondary"></select>
+            <p class="text-muted mb-0 py-2">© 2023 | Cameron M Deans | All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+    <!-- End -->    
+    <!-- script starts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.roboflow.com/0.2.20/roboflow.js"></script>
+    <script src="script.js"></script>
+    <script>
+    function myFunction() {
+        var x = document.getElementById("inner_container");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+    }
+    </script>
 </body>
 </html>
