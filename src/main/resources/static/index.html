@@ -15,23 +15,37 @@
         <header style="padding: 20px;">
             <h1>Assignment# 3</h1>
             <p>
-                <i>Client API to inference image(s) from Roboflow DataSet.</i>
+                <b><span><i>Client API to inference image(s) from a Roboflow DataSet</i></span></b>
                 <br><br>
                 <b>Roboflow DataSet(s) used:</b>
                 <br>
                 Chess Piece Detection API
                 <br>
                 Hard Hat Detection API
+                <br><br>
+                <b>What is Roboflow Inference?</b>
                 <br>
-                <b>Prediction (Confidence):</b> 
+                <b><span><i>Roboflow Inference: </i></span></b> 
                 <br>
-                Starting value = 17, use slider to change confindence level
+                Takes data inputted into a datset and allows the CPU to "predict" what is showing in the image selection
+                <br><br>
+                <b>Application Prediction (Confidence):</b> 
+                <br>
+                Application starting confidence value = 17, please use the slider to change the confindence level 
                 <br>            
-                <i><b>Note:</b> User must reselect image to view prediciton change(s)</i>
-                <br>            
-                <b>Slider:</b>
+                <i><b>Note:</b> The user must reselect a new image to view the updated prediciton change(s)</i>
+                <br><br>            
+                <b>Slider (Options):</b>
                 <br>
-                Moving the slider to the left will increase prediciton(s) returned
+                Moving the slider to the left will increase prediciton(s) returned, and vice versa moving the slider in the right direction
+                <br><br>
+                <b>What is Roboflow Confidence?</b>
+                <br>
+                <b><span><i>Roboflow Confidence:</i></span></b>
+                <br>
+                Is the value used within our prediction estimated value, confidence values range between (1 - 100)
+                <br>
+                A lower confidence value allows more room for errors and in return allows the CPU to make more predictions
             </p>
         </header>
     </div>
