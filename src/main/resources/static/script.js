@@ -10,8 +10,7 @@ if (window.matchMedia("(max-width: 940px)").matches) {
     var height = 640;
 }
 
-var main_stream = null;
-
+// color choices used for bounding box rectangles being drawn around API predictions on images
 var color_choices = [
     "#C7FC00",
     "#FF00FF",
@@ -27,6 +26,9 @@ var color_choices = [
     "#CCCCCC",
 ];
 
+// my API dataset models which can be found at 
+// https://app.roboflow.com/ass3/chess-63bga/2
+// https://app.roboflow.com/ass3/hard-hat-sample-rxxzq/1
 var available_models = {
     "chess-63bga": {
         "name": "Chess Board Sample",
@@ -82,9 +84,10 @@ var available_models = {
     }
 };
 
-// populate model select
+// populate model select 
 var model_select = document.getElementById("model-select");
 
+// create items to populate dropdopwn menu
 for (var item in available_models) {
     var option = document.createElement("option");
     option.text = available_models[item]["name"];
@@ -92,6 +95,7 @@ for (var item in available_models) {
     model_select.add(option);
 }
 
+// st current model variables and set constant API information variables
 var current_model_name = "chess-63bga";
 var current_model_version = 2;
 const API_KEY = "rf_CLCPOz364QZrkPGuARIi5T6NTXp2";
@@ -100,8 +104,10 @@ var no_detection_count = 0;
 var canvas_painted = false;
 var all_predictions = [];
 
+// set model to null
 var model = null;
 
+// async function to call the api request utilizing my API information
 async function apiRequest (image) {
     var version = available_models[current_model_name]["version"];
     var name = current_model_name;
@@ -121,6 +127,7 @@ async function apiRequest (image) {
     ).then(resJson => { return resJson["predictions"] });
 }
 
+// async fnction to ge tth model from Roboflow Inference using API key, model and version
 async function getModel() {
     var model = await roboflow
     .auth({
@@ -139,8 +146,11 @@ async function getModel() {
     return model;
 }
 
+// bounding box colors varibale
 var bounding_box_colors = {};
 
+// function used to switch model using the model select option
+// user can toggle between chess and hard hat datasets for inference
 function switchModel() {
     current_model_name = document.getElementById("model-select").value;
     current_model_version = available_models[current_model_name]["version"];
@@ -171,8 +181,10 @@ function switchModel() {
         "prechosen_images"
     );
 
+    // set prechosen images children variable
     var prechosen_images = prechosen_images.children;
 
+    // iterate through prechosen images 
     for (var i = 0; i < prechosen_images.length; i++) {
         prechosen_images[i].src = available_models[current_model_name]["imageGrid"][i];
     }
@@ -183,6 +195,7 @@ function switchModel() {
 // apply switchModel to select
 document.getElementById("model-select").addEventListener("change", switchModel);
 
+// set image state function and apply context to canvas
 function setImageState(src, canvas = "picture_canvas") {
     var canvas = document.getElementById(canvas);
     var context = canvas.getContext("2d");
@@ -198,6 +211,7 @@ function setImageState(src, canvas = "picture_canvas") {
     };
 }
 
+// draw bounding box function and label predicitons shown within the canvas
 function drawBoundingBoxes(predictions, canvas, context, scalingRatio, sx, sy, fromDetectAPI = false) {
     if (predictions.length > 0) {
       all_predictions = predictions;
@@ -301,6 +315,7 @@ function drawBoundingBoxes(predictions, canvas, context, scalingRatio, sx, sy, f
     }
 }
 
+// get coordinates of images function
 function getCoordinates(img) {
     var dx = 0;
     var dy = 0;
@@ -341,6 +356,7 @@ function getCoordinates(img) {
     return [sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight, scalingRatio];
 }
 
+// get base 64 images function
 function getBase64Image(img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) {
     var canvas = document.createElement("canvas");
     canvas.width = img.width;
@@ -351,6 +367,7 @@ function getBase64Image(img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) {
     return dataURL;
 }
 
+// image for inference function
 function imageInference(e) {
     // replace canvas with image
     document.getElementById("picture_canvas").style.display = "block";
@@ -388,6 +405,7 @@ function imageInference(e) {
     };
 }
 
+//
 function processDrop(e) {
     e.preventDefault();
     e.stopPropagation();
